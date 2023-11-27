@@ -14,8 +14,35 @@ class Person {
     }
 };
 
+abstract class House {
+    protected door: boolean;
+    protected key: Key;
+    protected tenants: Person[];
 
+    constructor(key: Key) {
+        this.door = false;
+        this.key = key;
+    }
 
+    abstract openDoor(key: Key): void;
+
+    comeIn(person: Person): void {
+        if (this.door) {
+            this.tenants.push(person);
+        }
+    }
+};
+
+class MyHouse extends House {
+    openDoor(key: Key): void {
+        if (key.getSignature() === this.key.getSignature()) {
+            this.door = true;
+            console.log('Door open');
+        } else {
+            console.log('Door closed');
+        }
+    }
+};
 
 const key = new Key();
 
